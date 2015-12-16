@@ -16,10 +16,6 @@
     <link rel="stylesheet" href="css/normalize.css">
     <!--<link rel="stylesheet" href="css/menu.css">-->
     <link rel="stylesheet" href="css/customer.css">
-    <style type="text/css">
-        body {
-        }
-    </style>
 </head>
 <body>
 <div id="login-register">
