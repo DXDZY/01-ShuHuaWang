@@ -66,6 +66,8 @@
     <Content Include="css\normalize.css" />
     <Content Include="dropdown-menu.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="header-footer.aspx" />
+    <Content Include="images-header\01.png" />
     <Content Include="images\01.jpg" />
     <Content Include="images\02.jpg" />
     <Content Include="images\03.jpg" />
@@ -130,6 +132,13 @@
     </Compile>
     <Compile Include="dropdown-menu.aspx.designer.cs">
       <DependentUpon>dropdown-menu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="header-footer.aspx.cs">
+      <DependentUpon>header-footer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="header-footer.aspx.designer.cs">
+      <DependentUpon>header-footer.aspx</DependentUpon>
     </Compile>
     <Compile Include="index-carousel.aspx.cs">
       <DependentUpon>index-carousel.aspx</DependentUpon>
@@ -196,7 +205,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="handler\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

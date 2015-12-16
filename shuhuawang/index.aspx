@@ -18,34 +18,25 @@
     <link rel="stylesheet" href="css/customer.css">
 </head>
 <body>
-<div id="login-register">
-
-</div>
+<%--登录和注册位置--%>
+<div id="login-register"></div>
 <!--页头-->
-<div class="header">
-    <div class="header-title">
-        中国书画网  |   中国权威艺术门户       服务热线：010-58696108
-    </div>
-    <div class="header-login">
-        <a id="login">登录</a>
-        <a id="register">注册</a>
-    </div>
-</div>
+<div id="header"></div>
 <div class="container">
     <!--第一行图片-->
     <div class="row">
-        <div class="col-sm-3" style="padding-top: 30px;">
-            <a href="#">
-                <img src="images/title.png" class="img-responsive" title=""></a>
+        <div class="col-sm-12" id="header-pictrue">
+            <img src="images-header/01.png" class="img-responsive img-rounded" title="">
+<%--            <img src="images-header/02.png" class="img-responsive img-rounded" title="">--%>
         </div>
     </div>
     <!--菜单-->
-    <div class="row" id="menu">
-    </div>
+    <div class="row" id="menu"></div>
     <!--旋转木马，新闻头条-->
     <div class="row">
         <!--旋转木马，新闻头条-->
         <div class="col-sm-8">
+            <!--旋转木马-->
             <div id="carousel"></div>
             <div class="row">
                 <div class="col-sm-12">
@@ -301,10 +292,7 @@
         </div>
     </div>
 </div>
-<div class="footer">
-    <div>新闻热线：010-58696108 主编信箱 submission@chinashj.com </div>
-    <div>网络文化经营许可证号：京网文【2013】0344-083号 京ICP备09023634号 京公网安备11010502003273</div>
-    <div>版权所有：Copyright 2004-2013 北京艺宝网络文化有限公司</div>
-</div>
+<%--页脚--%>
+<div id="footer"></div>
 </body>
 </html>

@@ -23,15 +23,10 @@
     <link rel="stylesheet" href="css/myPage.css">
 </head>
 <body>
-<div class="header">
-    <div class="header-title">
-        中国书画网  |   中国权威艺术门户       服务热线：010-58696108
-    </div>
-    <div class="header-login">
-        <a href="#">登录</a>
-        <a href="#">注册</a>
-    </div>
-</div>
+<%--登录和注册位置--%>
+<div id="login-register"></div>
+<!--页头-->
+<div id="header"></div>
 <div class="container">
     <div class="row">
         <div class="col-sm-3" style="padding-top: 30px;">
@@ -55,10 +50,7 @@
         </div>
     </div>
 </div>
-<div class="footer">
-    <div>新闻热线：010-58696108 主编信箱 submission@chinashj.com </div>
-    <div>网络文化经营许可证号：京网文【2013】0344-083号 京ICP备09023634号 京公网安备11010502003273</div>
-    <div>版权所有：Copyright 2004-2013 北京艺宝网络文化有限公司</div>
-</div>
+<%--页脚--%>
+<div id="footer"></div>
 </body>
 </html>
