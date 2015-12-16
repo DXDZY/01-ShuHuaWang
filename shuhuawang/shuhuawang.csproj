@@ -108,6 +108,7 @@
     <Content Include="images\zx-detail.png" />
     <Content Include="index-carousel.aspx" />
     <Content Include="index-luntan.aspx" />
+    <Content Include="index-tab.aspx" />
     <Content Include="index-zx-detail.aspx" />
     <Content Include="index-zx.aspx" />
     <Content Include="index.aspx" />
@@ -153,6 +154,13 @@
     </Compile>
     <Compile Include="index-luntan.aspx.designer.cs">
       <DependentUpon>index-luntan.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="index-tab.aspx.cs">
+      <DependentUpon>index-tab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="index-tab.aspx.designer.cs">
+      <DependentUpon>index-tab.aspx</DependentUpon>
     </Compile>
     <Compile Include="index-zx-detail.aspx.cs">
       <DependentUpon>index-zx-detail.aspx</DependentUpon>
