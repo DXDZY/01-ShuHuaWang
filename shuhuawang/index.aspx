@@ -4,18 +4,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head lang="zh-CN">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title></title>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/customer.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/jquery-ui.css">
-    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/normalize.css"/>
     <!--<link rel="stylesheet" href="css/menu.css">-->
-    <link rel="stylesheet" href="css/customer.css">
+    <link rel="stylesheet" href="css/customer.css"/>
 </head>
 <body>
 <%--登录和注册位置--%>
@@ -26,7 +26,7 @@
     <!--第一行图片-->
     <div class="row">
         <div class="col-sm-12" id="header-pictrue">
-            <img src="images-header/01.png" class="img-responsive img-rounded" title="">
+            <img src="images-header/01.png" class="img-responsive img-rounded" title=""/>
 <%--            <img src="images-header/02.png" class="img-responsive img-rounded" title="">--%>
         </div>
     </div>
@@ -34,8 +34,7 @@
     <div class="row" id="menu"></div>
     <!--旋转木马，新闻头条-->
     <div class="row">
-
-        <!--旋转木马，新闻头条-->
+        <!--旋转木马-->
         <div class="col-sm-8">
             <!--旋转木马-->
             <div id="carousel"></div>
