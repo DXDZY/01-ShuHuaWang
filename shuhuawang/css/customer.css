@@ -342,3 +342,13 @@ p{
 #header-pictrue {
 
 }
+.tab-img {
+    height:120px;
+    width:120px;
+}
+.index-tab .container-fluid{
+    padding-left:0
+}
+.index-tab .row {
+    padding-top:10px;
+}

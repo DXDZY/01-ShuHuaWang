@@ -51,55 +51,7 @@
             </div>
         </div>
         <!--右侧标签-->
-        <div class="col-sm-4">
-            <div id="tabs">
-                <ul>
-                    <li><a href="#tabs-1">专栏</a></li>
-                    <li><a href="#tabs-2">访谈</a></li>
-                </ul>
-                <div id="tabs-1">
-                    <div class="tab-container">
-                        <div class="tab-picture">
-                            <a href="#">
-                                <img src="images/people1.jpg" alt="..." class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="tab-personName"><strong>启动</strong></div>
-                        <div class="tab-personDetail">
-                            <p>老顽童启功 启功(1912-2005)，字元白，也作元伯，中国当代著名教育家、...<a href="#">[详情]</a></p>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="tab-container">
-                        <div class="tab-picture">
-                            <a href="#">
-                                <img src="images/people2.jpg" alt="..." class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="tab-personName">启动</div>
-                        <div class="tab-personDetail">
-                            <p>老顽童启功 启功(1912-2005)，字元白，也作元伯，中国当代著名教育家、...<a href="#">[详情]</a></p>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="tab-container">
-                        <div class="tab-picture">
-                            <a href="#">
-                                <img src="images/people3.jpg" alt="..." class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="tab-personName">启动</div>
-                        <div class="tab-personDetail">
-                            <p>老顽童启功 启功(1912-2005)，字元白，也作元伯，中国当代著名教育家、...<a href="#">[详情]</a></p>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div id="tabs-2">
-                    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-                </div>
-            </div>
-        </div>
+        <div class="col-sm-4" id="right-tab"></div>
     </div>
     <div class="row picture-show-title">
         <div class="col-sm-2 history-class">

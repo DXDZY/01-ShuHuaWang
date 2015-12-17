@@ -31,6 +31,10 @@
         if ($('#footer').length > 0) {
             $('#footer').load('header-footer.aspx .footer');
         }
+        //加载首页右侧标签
+        if ($('#right-tab').length > 0) {
+            $('#right-tab').load('index-tab.aspx #index-tabs');
+        }
     });
 })(jQuery);
 
