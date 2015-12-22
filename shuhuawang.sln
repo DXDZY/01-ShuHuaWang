@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shuhuawang", "shuhuawang\shuhuawang.csproj", "{FA024426-664B-48B1-B0AB-11CDA7DCBF4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{C2D3E78D-D103-46B2-8710-D3E751FB3579}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{FA024426-664B-48B1-B0AB-11CDA7DCBF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA024426-664B-48B1-B0AB-11CDA7DCBF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA024426-664B-48B1-B0AB-11CDA7DCBF4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D3E78D-D103-46B2-8710-D3E751FB3579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D3E78D-D103-46B2-8710-D3E751FB3579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D3E78D-D103-46B2-8710-D3E751FB3579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D3E78D-D103-46B2-8710-D3E751FB3579}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
