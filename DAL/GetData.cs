@@ -40,5 +40,30 @@ namespace DAL
                 }
             }
         }
+        public void insert(string id,string name)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            try
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = "insert into a(id,name)values(@id,@name)";
+                MySqlDataAdapter adap = new MySqlDataAdapter(cmd);
+                cmd.Parameters.AddWithValue("@id", int.Parse(id));
+                cmd.Parameters.AddWithValue("@name",name);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
     }
 }
