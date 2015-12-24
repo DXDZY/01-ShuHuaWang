@@ -22,23 +22,15 @@
 <div class="bs-example">
     <nav id="navbar-example" class="navbar navbar-default navbar-static">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-example-js-navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.aspx">首页</a>
-            </div>
             <div class="navbar-collapse bs-example-js-navbar-collapse collapse in" aria-expanded="true">
                 <ul class="nav navbar-nav">
+                    <li><a href="index.aspx">首页</a></li>
                     <li class="dropdown">
-                        <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             新闻
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="drop1">
+                        <ul class="dropdown-menu" >
                             <li><a href="index-zx.aspx">展讯</a></li>
                             <li><a href="#">快讯</a></li>
                             <li><a href="#">国内</a></li>

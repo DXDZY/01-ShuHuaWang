@@ -121,6 +121,7 @@
     <Content Include="js\customer.js" />
     <Content Include="js\jqPaginator.js" />
     <Content Include="js\jquery-CreateDetailList.js" />
+    <Content Include="js\jquery-create_menu.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\jquery.js" />
     <Content Include="js\myPage.js" />
