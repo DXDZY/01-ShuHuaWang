@@ -16,8 +16,21 @@
             async : false
         });
         //加载导航条
-        if($('#menu').length>0){
-            $('#menu').load('dropdown-menu.aspx #menu-col');
+        if ($('#menu').length > 0) {
+            var url = 'handler/GetDataHandler.ashx';
+            var requestData = {
+                cmd : 'getMenu',
+                userPower : '0'
+            };
+            $.get(url, requestData, function (data) {
+                if (data.length > 0) {
+                    var dataJson = $.parseJSON(data);
+                    $('#menu').menu({
+                        data: dataJson
+                    });
+                }
+            });
+            //$('#menu').load('dropdown-menu.aspx #menu-col');
         }
 
         //加载旋转木马

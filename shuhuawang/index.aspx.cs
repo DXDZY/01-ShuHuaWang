@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-using DAL;
 
 namespace shuhuawang
 {
@@ -13,8 +12,7 @@ namespace shuhuawang
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            GetData gd = new GetData();
-            DataTable dt = gd.getMenu();
+
         }
     }
 }
