@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/normalize.css"/>
     <!--<link rel="stylesheet" href="css/menu.css">-->
     <link rel="stylesheet" href="css/customer.css"/>
+    <link rel="icon" href="images/toubiao.png" />
 </head>
 <body>
 <%--登录和注册位置--%>
