@@ -15,14 +15,15 @@ namespace DAL
         /// 获取菜单表
         /// </summary>
         /// <returns></returns>
-        public DataTable getMenu()
+        public DataTable getMenu(string power)
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             try
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "select * from menu";
+                cmd.CommandText = "select * from menu where menu_power like ?power order by menu_id asc";
+                cmd.Parameters.Add("?power", MySqlDbType.VarChar).Value ="%" + power + "%";
                 MySqlDataAdapter adap = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adap.Fill(ds);
