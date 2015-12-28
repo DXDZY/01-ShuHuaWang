@@ -9,7 +9,7 @@ $(document).ready(function() {
     $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
 
     $('#defaultForm').bootstrapValidator({
-//        live: 'disabled',
+        //        live: 'disabled',
         message: 'This value is not valid',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -46,10 +46,19 @@ $(document).ready(function() {
                         regexp: /^[a-zA-Z0-9_\.]+$/,
                         message: '用户名只能由字母、数字、点和下划线组成'
                     },
-//                        remote: {
-//                            url: 'remote.php',
-//                            message: 'The username is not available'
-//                        },
+                    remote: {
+                        url: 'handler/GetDataHandler.ashx',
+                        type: 'post',
+                        //async: 'false',
+                        data: {
+                            cmd: 'checkFirstMenuName',
+                            menuName: function (validator) {
+                                return $('#menuForm :input[name="FirstMenuName"]').val();
+
+                            }
+                        },
+                        message: '菜单名称已经存在'
+                    },
                     different: {
                         field: 'password',
                         message: '用户名和密码不能相同'
@@ -104,6 +113,27 @@ $(document).ready(function() {
                             var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
                             return value == sum;
                         }
+                    }
+                }
+            },
+            firstMenuName: {
+                validators: {
+                    notEmpty: {
+                        message: '一级菜单不能为空'
+                    },
+                    remote: {
+                        url: 'handler/GetDataHandler.ashx',
+                        type: 'post',
+                        async: 'false',
+                        data: {
+                            cmd: 'checkFirstMenuName',
+                            menuName: function (validator) {
+                                return $('#menuForm :input[name="FirstMenuName"]').val();
+                            }
+                        },
+                        //delay:2000,
+                        message: '菜单名称已经存在'
+
                     }
                 }
             }

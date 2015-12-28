@@ -17,6 +17,7 @@ namespace shuhuawang.handler
         {
             GetData gd = new GetData();           
             string cmd = context.Request["cmd"].ToString();
+            //创建菜单
             if (cmd == "getMenu")
             {
                 string userPower = context.Request["userPower"].ToString();
@@ -35,6 +36,11 @@ namespace shuhuawang.handler
                 }
                 string menu = gd.getMenuJSON(power);
                 context.Response.Write(menu);
+            }
+            //检查菜单是否已经存在
+            else if (cmd == "checkFirstMenuName")
+            {
+                context.Response.Write("false");
             }
             context.Response.ContentType = "text/plain";
             context.Response.Write("");
