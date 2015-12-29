@@ -38,7 +38,7 @@ namespace shuhuawang.handler
                 context.Response.Write(menu);
             }
             //检查菜单是否已经存在
-            else if (cmd == "checkFirstMenuName")
+            else if (cmd == "checkMenuName")
             {
                 context.Response.Write("false");
             }

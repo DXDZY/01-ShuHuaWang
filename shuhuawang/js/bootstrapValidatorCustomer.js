@@ -120,20 +120,48 @@ $(document).ready(function() {
                 validators: {
                     notEmpty: {
                         message: '一级菜单不能为空'
+                    }
+                    //remote: {
+                    //    url: 'handler/GetDataHandler.ashx',
+                    //    type: 'post',
+                    //    async: 'false',
+                    //    data: {
+                    //        cmd: 'checkMenuName',
+                    //        menuName: function (validator) {
+                    //            return $('#menuForm :input[name="FirstMenuName"]').val();
+                    //        }
+                    //    },
+                    //    //delay:2000,
+                    //    message: '菜单名称已经存在'
+
+                    //}
+                }
+            },
+            secondMenuName: {
+                validators: {
+                    notEmpty: {
+                        message: '二级菜单不能为空'
                     },
                     remote: {
                         url: 'handler/GetDataHandler.ashx',
                         type: 'post',
                         async: 'false',
                         data: {
-                            cmd: 'checkFirstMenuName',
+                            cmd: 'checkMenuName',
                             menuName: function (validator) {
-                                return $('#menuForm :input[name="FirstMenuName"]').val();
+                                return $('#menuForm :input[name="secondMenuName"]').val();
                             }
                         },
                         //delay:2000,
-                        message: '菜单名称已经存在'
+                        message: '一级菜单下已存在该二级菜单'
 
+                    }
+                }
+            },
+            menuURL: {
+                validators: {
+                    notEmpty: {
+                        message: '链接地址不能为空'
                     }
                 }
             }
@@ -148,4 +176,12 @@ $(document).ready(function() {
     $('#resetBtn').click(function() {
         $('#defaultForm').data('bootstrapValidator').resetForm(true);
     });
+
+    //$('#validateBtn1').click(function () {
+    //    $('#defaultForm1').bootstrapValidator('validate');
+    //});
+
+    //$('#resetBtn1').click(function () {
+    //    $('#defaultForm1').data('bootstrapValidator').resetForm(true);
+    //});
 });

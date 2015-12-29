@@ -11,6 +11,8 @@
                 event: "mouseover"
             });
         });
+        ////初始化tooltip
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
         //同步
         $.ajaxSetup({
             async : false
