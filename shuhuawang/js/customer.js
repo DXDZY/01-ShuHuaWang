@@ -170,7 +170,11 @@
             var html = $text;
             html += '<span class="caret"></span>'
             $this.closest('ul').prev().html(html);
-            $this.closest('.input-group-btn').next().val($text).trigger('keydown').focus();
+            $this.closest('.input-group-btn').next().val($text).focus();
+            $('#defaultForm')
+                .data('bootstrapValidator')
+                .updateStatus('firstMenuName', 'NOT_VALIDATED')
+                .validateField('firstMenuName');
         });
         
     });
