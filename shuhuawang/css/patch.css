@@ -3,13 +3,16 @@
 }
 
 .bs-example:after {
-	content: "添加菜单：" !important;
+	content: "添加一二级菜单：" !important;
 }
 .bs-example-1:after {
     content: "当前菜单：" !important;
 }
 .bs-example-2:after {
     content: "操作菜单属性：" !important;
+}
+.bs-example-3:after {
+    content: "一级菜单排序：" !important;
 }
 .bs-docs-section > p, .bs-docs-section > ul, 
 .bs-docs-section > ol, .bs-callout > p, 
@@ -21,4 +24,5 @@
 
 .bs-callout *:last-child {
 	margin-bottom: 0;
+    cursor:pointer;
 }

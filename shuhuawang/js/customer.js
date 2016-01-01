@@ -50,6 +50,33 @@
         if ($('#right-tab').length > 0) {
             $('#right-tab').load('index-tab.aspx #index-tabs');
         }
+        //菜单后台一级菜单下拉值初始化
+        if ($('#first-Menu-Drop-down').length > 0) {
+            var url = 'handler/GetDataHandler.ashx';
+            var requestData = {
+                cmd: 'getMenu',
+                userPower: '0'
+            };
+            $.get(url, requestData, function (data) {
+                if (data.length > 0) {
+                    var dataJson = $.parseJSON(data);
+                    var html = '';
+                    $.each(dataJson, function (index, item) {
+                        if (index == 0) {
+                            return true;
+                        }
+                        if (index == 1) {
+                            html += '<div class="input-group"><div class="input-group-btn"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                            html += item.menu_cn_name;
+                            html += '<span class="caret"></span></button><ul class="dropdown-menu">';
+                        }                        
+                        html += '<li><a style="cursor:pointer;">' + item.menu_cn_name + '</a></li>';
+                    });
+                    html += '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
+                }
+                $('#first-Menu-Drop-down').html(html);
+            });            
+        }
     });
 })(jQuery);
 
@@ -136,5 +163,15 @@
                 })
             }
         });
+        //菜单后台一级菜单下拉点击事件
+        $('.dropdown-menu').on('click', 'a', function (event) {
+            var $this = $(this);
+            var $text = $this.text();
+            var html = $text;
+            html += '<span class="caret"></span>'
+            $this.closest('ul').prev().html(html);
+            $this.closest('.input-group-btn').next().val($text).trigger('keydown').focus();
+        });
+        
     });
 })(jQuery);
