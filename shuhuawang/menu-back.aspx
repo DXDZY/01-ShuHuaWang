@@ -13,12 +13,12 @@
     <script type="text/javascript" src="js/jquery-create_menu.js"></script>    
     <script type="text/javascript" src="js/customer.js"></script>
     <script type="text/javascript" src="js/bootstrapValidator.js"></script>
-    <script type="text/javascript" src="js/bootstrapValidatorCustomer.js"></script>
+    <%--<script type="text/javascript" src="js/bootstrapValidatorCustomer.js"></script>--%>
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/jquery-ui.css"/>
-    <link rel="stylesheet" href="css/normalize.css"/>
-    <link rel="stylesheet" href="css/patch.css" />
-    <link rel="stylesheet" href="css/docs.css" />
+    <%--<link rel="stylesheet" href="css/normalize.css"/>--%>
+    <%--<link rel="stylesheet" href="css/patch.css" />--%>
+    <%--<link rel="stylesheet" href="css/docs.css" />--%>
     <link rel="stylesheet" href="css/bootstrapValidator.css"/>
     <!--<link rel="stylesheet" href="css/menu.css">-->
     <link rel="stylesheet" href="css/customer.css"/>
@@ -36,50 +36,62 @@
 </head>
 <body>
     <div class="container">
-        <div class="row first-menu-container">
-            <div class="col-sm-8">
-                <div class="bs-example" data-example-id="simple-horizontal-form">
-                    <form id="defaultForm" method="post" class="form-horizontal" action="handler/GetDataHandler.ashx">
+        <%--<div class="row" id="menu"></div>--%>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row" id="menu"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <%--<div class="bs-example" data-example-id="simple-horizontal-form">--%>
+                <div class="alert alert-info" role="alert">操作一级菜单（增删改）</div>
+                    <form id="defaultFormF" method="post" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-lg-3 control-label">一级菜单</label>
                             <div class="col-lg-5">
                                 <div id="first-Menu-Drop-down">
-                                <%--<div class="input-group">
-                                    <div id="first-Menu-Drop-down">--%>
-                                        
-                                            
-    <%--                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Action<span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                  <li><a href="#">Action</a></li>
-                                                  <li><a href="#">Another action</a></li>
-                                                  <li><a href="#">Something else here</a></li>
-                                                </ul>--%>
-                                            
-                                        
-                                    <%--</div>
-                                    <input type="text" class="form-control" name="firstMenuName" />
-                                    </div>--%>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">二级级菜单</label>
+                            <label class="col-lg-3 control-label">用户权限</label>
                             <div class="col-lg-5">
-                                <input type="text" class="form-control" name="secondMenuName" />
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">游客 <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">游客</a></li>
+                                        <li><a href="#">管理员</a></li>
+                                    </ul>
+                                    </div><!-- /btn-group -->
+                                    <input type="text" class="form-control" name="firstMenuPower" id="firstMenuPower"/>
+                                </div><!-- /input-group -->
                             </div>
                         </div>
-                    
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">链接地址</label>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" name="firstMenuNameUrl" id="firstMenuNameUrl" value="index-zx.aspx" />
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="signup" value="Sign up">创建</button>
-                                <button type="button" class="btn btn-info" id="resetBtn">重置</button>
+                                <button type="submit" class="btn btn-primary" name="signup" value="Sign up" id="defaultFormFSubmit">提交</button>
+                                <button type="button" class="btn btn-info" id="defaultFormFresetBtn">重置</button>
                             </div>
                         </div>
                     </form>
-                 </div>
+                <div class="alert alert-success messageShow" role="alert" id="firstMenuSuccess">
+                    <strong>操作成功！</strong>
+                </div>
+                <div class="alert alert-warning messageShow" role="alert" id="firstMenuFail">
+                    <strong>操作失败！</strong>
+                </div>
+                 <%--</div>--%>
             </div>
             <div class="col-sm-4">
                 <div class="bs-example bs-example-3" data-example-id="simple-horizontal-form">
@@ -149,12 +161,59 @@
  * Created by XiaoDong on 2015/12/13.
  */
         $(document).ready(function () {
-            // Generate a simple captcha
-            function randomNumber(min, max) {
-                return Math.floor(Math.random() * (max - min + 1) + min);
-            };
-            $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
-
+            $('#defaultFormF').bootstrapValidator({
+                //        live: 'disabled',
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    firstMenuPower: {
+                        validators: {
+                            notEmpty: {
+                                message: '用户权限不能为空'
+                            },
+                            regexp: {
+                                regexp: /^游客$|^管理员$/,
+                                message: '权限值只能是游客或管理员'
+                            }
+                        }
+                    },
+                    firstMenuName: {
+                        validators: {
+                            notEmpty: {
+                                message: '一级菜单不能为空'
+                            }
+                        }
+                    },
+                    firstMenuNameUrl: {
+                        validators: {
+                        }
+                    }
+                }
+            }).on('success.form.bv', function (event) {
+                event.preventDefault();
+                var url = 'handler/GetDataHandler.ashx';
+                var $this = $(this);
+                var form = $this.serialize();
+                var requestData = {
+                    cmd: 'firstMenuSave',
+                    form:form
+                };
+                $.post(url, requestData, function (result) {
+                    if (result == '1') {
+                        $('#firstMenuSuccess').show('slow');
+                        setTimeout('hideMessageSuccess()', 3000);
+                    } else {
+                        $('#firstMenuFail').show('slow');
+                        setTimeout('hideMessageFail()', 3000);
+                    }
+                    $this.find('[type=submit]').removeAttr('disabled');
+                    // ... process the result ...
+                });
+            });
             $('#defaultForm1').bootstrapValidator({
                 //        live: 'disabled',
                 message: 'This value is not valid',
@@ -163,7 +222,7 @@
                     invalid: 'glyphicon glyphicon-remove',
                     validating: 'glyphicon glyphicon-refresh'
                 },
-                fields: {                   
+                fields: {
                     menuURL: {
                         validators: {
                             notEmpty: {
@@ -173,14 +232,15 @@
                     }
                 }
             });
-
-            // Validate the form manually
             $('#validateBtn1').click(function () {
                 $('#defaultForm1').bootstrapValidator('validate');
             });
 
             $('#resetBtn1').click(function () {
-                $('#defaultForm1').data('bootstrapValidator').resetForm(true);
+                $('#defaultForm').data('bootstrapValidator').resetForm(true);
+            });
+            $('#defaultFormFresetBtn').click(function () {
+                $('#defaultFormF').data('bootstrapValidator').resetForm(true);
             });
             $("#sortable").sortable({
                 revert: true
@@ -194,7 +254,12 @@
             //    $('#defaultForm1').data('bootstrapValidator').resetForm(true);
             //});
         });
-
+        function hideMessageSuccess() {
+            $('.alert-success').hide('slow');
+        }
+        function hideMessageFail() {
+            $('.alert-danger').hide('slow');
+        }
     </script>
 </body>
 </html>

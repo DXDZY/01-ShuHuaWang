@@ -70,7 +70,7 @@
                             html += item.menu_cn_name;
                             html += '<span class="caret"></span></button><ul class="dropdown-menu">';
                         }                        
-                        html += '<li><a style="cursor:pointer;">' + item.menu_cn_name + '</a></li>';
+                        html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '">' + item.menu_cn_name + '</a></li>';
                     });
                     html += '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
                 }
@@ -170,11 +170,30 @@
             var html = $text;
             html += '<span class="caret"></span>'
             $this.closest('ul').prev().html(html);
-            $this.closest('.input-group-btn').next().val($text).focus();
-            $('#defaultForm')
-                .data('bootstrapValidator')
-                .updateStatus('firstMenuName', 'NOT_VALIDATED')
-                .validateField('firstMenuName');
+            var $currentInput = $this.closest('.input-group-btn').next();
+            $currentInput.val($text).focus();
+            if ($currentInput.attr('name') == 'firstMenuName') {
+                //验证菜单名称
+                $('#defaultFormF')
+                    .data('bootstrapValidator')
+                    .updateStatus('firstMenuName', 'NOT_VALIDATED')
+                    .validateField('firstMenuName');
+                //权限赋值
+                $('#firstMenuPower').val($this.attr('data-menuPower'));
+                //url赋值
+                $('#firstMenuNameUrl').val($this.attr('data-menuUrl'));
+                //验证权限
+                $('#defaultFormF')
+                    .data('bootstrapValidator')
+                    .updateStatus('firstMenuPower', 'NOT_VALIDATED')
+                    .validateField('firstMenuPower');
+            } else if ($currentInput.attr('name') == 'firstMenuPower') {
+                //验证权限
+                $('#defaultFormF')
+                    .data('bootstrapValidator')
+                    .updateStatus('firstMenuPower', 'NOT_VALIDATED')
+                    .validateField('firstMenuPower');
+            }
         });
         
     });

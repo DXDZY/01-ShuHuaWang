@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using BLL;
+using Model;
 
 namespace shuhuawang.handler
 {
@@ -15,7 +16,7 @@ namespace shuhuawang.handler
 
         public void ProcessRequest(HttpContext context)
         {
-            GetData gd = new GetData();           
+            GetData gd = new GetData();
             string cmd = context.Request["cmd"].ToString();
             //创建菜单
             if (cmd == "getMenu")
@@ -41,6 +42,13 @@ namespace shuhuawang.handler
             else if (cmd == "checkMenuName")
             {
                 context.Response.Write("false");
+            }
+            //存储一级菜单
+            else if (cmd == "firstMenuSave")
+            {
+                string form = HttpUtility.UrlDecode(context.Request["form"].ToString());
+                gd.insertNewFirstMenu(form);
+                context.Response.Write("1");
             }
             context.Response.ContentType = "text/plain";
             context.Response.Write("");
