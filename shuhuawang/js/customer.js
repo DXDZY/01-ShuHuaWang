@@ -51,7 +51,7 @@
             $('#right-tab').load('index-tab.aspx #index-tabs');
         }
         //菜单后台一级菜单下拉值初始化
-        if ($('#first-Menu-Drop-down').length > 0) {
+        if ($('#first-Menu-Drop-down,#second-Menu-Drop-down').length > 0) {
             var url = 'handler/GetDataHandler.ashx';
             var requestData = {
                 cmd: 'getMenu',
@@ -72,9 +72,13 @@
                         }                        
                         html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '">' + item.menu_cn_name + '</a></li>';
                     });
-                    html += '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
+                    var firstHtml = html + '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
+                    var secondHtml = html + '</ul></div><input type="text"class="form-control"name="secondMenuLevelName" disabled/></div>';
+                    $('#first-Menu-Drop-down').html(firstHtml);
+                    $('#second-Menu-Drop-down').html(secondHtml);
+                    //html += '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
                 }
-                $('#first-Menu-Drop-down').html(html);
+
             });            
         }
     });
@@ -164,7 +168,7 @@
             }
         });
         //菜单后台一级菜单下拉点击事件
-        $('.dropdown-menu').on('click', 'a', function (event) {
+        $(document).on('click', '.dropdown-menu a', function (event) {
             var $this = $(this);
             var $text = $this.text();
             var html = $text;
@@ -172,6 +176,7 @@
             $this.closest('ul').prev().html(html);
             var $currentInput = $this.closest('.input-group-btn').next();
             $currentInput.val($text).focus();
+            //操作一级菜单
             if ($currentInput.attr('name') == 'firstMenuName') {
                 //验证菜单名称
                 $('#defaultFormF')
@@ -193,6 +198,122 @@
                     .data('bootstrapValidator')
                     .updateStatus('firstMenuPower', 'NOT_VALIDATED')
                     .validateField('firstMenuPower');
+            }
+            if ($currentInput.attr('name') == 'secondMenuName') {
+                //验证菜单名称
+                $('#defaultFormS')
+                    .data('bootstrapValidator')
+                    .updateStatus('secondMenuName', 'NOT_VALIDATED')
+                    .validateField('secondMenuName');
+                //权限赋值
+                $('#secondMenuPower').val($this.attr('data-menuPower'));
+                //url赋值
+                $('#secondMenuNameUrl').val($this.attr('data-menuUrl'));
+                //验证权限
+                $('#defaultFormS')
+                    .data('bootstrapValidator')
+                    .updateStatus('secondMenuPower', 'NOT_VALIDATED')
+                    .validateField('secondMenuPower');
+            }
+            else if ($currentInput.attr('name') == 'secondMenuPower') {
+                //验证权限
+                $('#defaultFormS')
+                    .data('bootstrapValidator')
+                    .updateStatus('secondMenuPower', 'NOT_VALIDATED')
+                    .validateField('secondMenuPower');
+            }
+            //操作二级菜单
+            if ($currentInput.attr('name') == 'secondMenuLevelName') {
+                var url = 'handler/GetDataHandler.ashx';
+                var requestData = {
+                    cmd: 'getMenu',
+                    userPower: '0'
+                };
+                $.get(url, requestData, function (data) {
+                    if (data.length > 0) {
+                        var dataJson = $.parseJSON(data);
+                        var html = '';
+                        $.each(dataJson, function (index, item) {
+                            if (item.menu_cn_name == $text) {
+                                if (item.child.length > 0) {
+                                    $.each(item.child, function (indexChild, itemChild) {
+                                        if (indexChild == 0) {
+                                            html += '<div class="input-group"><div class="input-group-btn"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                                            html += itemChild.menu_cn_name;
+                                            html += '<span class="caret"></span></button><ul class="dropdown-menu">';
+                                        }
+                                        html += '<li><a style="cursor:pointer;" data-menuPower="' + itemChild.menu_power + '" data-menuUrl="' + itemChild.menu_url + '">' + itemChild.menu_cn_name + '</a></li>';
+                                    });
+                                    html += '</ul></div><input type="text" class="form-control" name="secondMenuName"/></div>';                                   
+                                }
+                                else {
+                                    html = '<input type="text" class="form-control" name="secondMenuName" id="secondMenuName" />';
+                                }
+                                $('#second-level-Drop-down').html(html);
+                                $('#defaultFormS').bootstrapValidator({
+                                    //        live: 'disabled',
+                                    message: 'This value is not valid',
+                                    feedbackIcons: {
+                                        valid: 'glyphicon glyphicon-ok',
+                                        invalid: 'glyphicon glyphicon-remove',
+                                        validating: 'glyphicon glyphicon-refresh'
+                                    },
+                                    fields: {
+                                        secondMenuPower: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '用户权限不能为空'
+                                                },
+                                                regexp: {
+                                                    regexp: /^游客$|^管理员$/,
+                                                    message: '权限值只能是游客或管理员'
+                                                }
+                                            }
+                                        },
+                                        secondMenuLevelName: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '一级级菜单不能为空'
+                                                }
+                                            }
+                                        },
+                                        secondMenuName: {
+                                            validators: {
+                                                notEmpty: {
+                                                    message: '二级级菜单不能为空'
+                                                }
+                                            }
+                                        },
+                                        secondMenuNameUrl: {
+                                            validators: {
+                                            }
+                                        }
+                                    }
+                                }).on('success.form.bv', function (event) {
+                                    event.preventDefault();
+                                    var url = 'handler/GetDataHandler.ashx';
+                                    var $this = $(this);
+                                    var form = $this.serialize();
+                                    var requestData = {
+                                        cmd: 'firstMenuSave',
+                                        form: form
+                                    };
+                                    $.post(url, requestData, function (result) {
+                                        if (result == '1') {
+                                            $('#secondMenuSuccess').show('slow');
+                                            setTimeout('hideMessageSuccess()', 3000);
+                                        } else {
+                                            $('#secondMenuFail').show('slow');
+                                            setTimeout('hideMessageFail()', 3000);
+                                        }
+                                        $this.find('[type=submit]').removeAttr('disabled');
+                                        // ... process the result ...
+                                    });
+                                });
+                            }                            
+                        });                        
+                    }                    
+                });
             }
         });
         

@@ -1541,10 +1541,10 @@
             var $this   = $(this),
                 data    = $this.data('bootstrapValidator'),
                 options = 'object' === typeof option && option;
-            if (!data) {
+            //if (!data) {
                 data = new BootstrapValidator(this, options);
                 $this.data('bootstrapValidator', data);
-            }
+            //}
 
             // Allow to call plugin method
             if ('string' === typeof option) {
