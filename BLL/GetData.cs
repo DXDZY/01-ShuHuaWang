@@ -81,7 +81,7 @@ namespace BLL
             Dictionary<string, string> formDictionary = JsonTools.jsonToDictionary(form);
             MenuFirst menuFirst = new MenuFirst();
             menuFirst = JsonTools.PopulateEntityFromCollection(menuFirst, formDictionary);
-            DataTable dtSameMenuName = gd.getSameNameMenu(menuFirst.firstMenuName);
+            DataTable dtSameMenuName = gd.getSameNameMenu(menuFirst.firstMenuName,0);
             if (dtSameMenuName.Rows.Count > 0)
             {
                 gd.UpdateFirstMenu(menuFirst);
@@ -92,14 +92,60 @@ namespace BLL
                 gd.insertNewFirstMenu(newID, menuFirst);
             }
         }
+        public void insertNewSecondMenu(string form)
+        {
+            Dictionary<string, string> formDictionary = JsonTools.jsonToDictionary(form);
+            MenuSecond menuSecond = new MenuSecond();
+            menuSecond = JsonTools.PopulateEntityFromCollection(menuSecond, formDictionary);
+            //取得一级菜单
+            DataTable dtParentMenu = gd.getSameNameMenu(menuSecond.secondMenuLevelName, 0);
+            int parentID = 0;
+            if (dtParentMenu.Rows.Count > 0)
+            {
+                parentID = Convert.ToInt32(dtParentMenu.Rows[0]["menu_id"]);
+            }
+            //取得二级菜单
+            DataTable dtSameMenuName = gd.getSameNameMenu(menuSecond.secondMenuName,parentID);
+            if (dtSameMenuName.Rows.Count > 0)
+            {
+                gd.UpdateSecondMenu(menuSecond, parentID);
+            }
+            else
+            {
+                int newID = gd.GetNewMenuID();
+                gd.insertNewSecondMenu(newID, menuSecond, parentID);
+            }
+
+        }
         /// <summary>
         /// 获取相同菜单行
         /// </summary>
         /// <param name="menuName"></param>
         /// <returns></returns>
-        public DataTable getSameNameMenu(string menuName)
+        public DataTable getSameNameMenu(string menuName,int parentID)
         {
-            return gd.getSameNameMenu(menuName);
+            return gd.getSameNameMenu(menuName, parentID);
+        }
+        /// <summary>
+        /// 菜单排序
+        /// </summary>
+        /// <param name="menuName"></param>
+        /// <param name="parentID"></param>
+        public void UpdateMenuOrder(string menuNameList,int parentID)
+        {
+            string[] menuNameArray = menuNameList.Split('&');
+
+            gd.UpdateMenuOrder(menuNameArray, parentID);
+        }
+        /// <summary>
+        /// 删除菜单
+        /// </summary>
+        /// <param name="menuName"></param>
+        /// <param name="menuID"></param>
+        /// <param name="parentID"></param>
+        public void DeleteMenu(int menuID)
+        {
+            gd.DeleteMenu(menuID);
         }
     }
 }

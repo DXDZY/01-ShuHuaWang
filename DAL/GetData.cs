@@ -23,7 +23,7 @@ namespace DAL
             try
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "select * from menu where menu_power like ?power order by menu_id asc";
+                cmd.CommandText = "select * from menu where menu_power like ?power and enabled=1 order by  menu_order asc";
                 cmd.Parameters.Add("?power", MySqlDbType.VarChar).Value ="%" + power + "%";
                 MySqlDataAdapter adap = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -47,15 +47,16 @@ namespace DAL
         /// </summary>
         /// <param name="menuName"></param>
         /// <returns></returns>
-        public DataTable getSameNameMenu(string menuName)
+        public DataTable getSameNameMenu(string menuName,int parentID)
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
             connection.Open();
             try
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "select * from menu where menu_cn_name = ?menuName";
+                cmd.CommandText = "select * from menu where menu_cn_name = ?menuName and menu_parent_id=?parentID";
                 cmd.Parameters.Add("?menuName", MySqlDbType.VarChar).Value = menuName;
+                cmd.Parameters.Add("?parentID", MySqlDbType.Int32).Value = parentID;
                 MySqlDataAdapter adap = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adap.Fill(ds);
@@ -136,6 +137,38 @@ namespace DAL
             }
         }
         /// <summary>
+        /// 插入新的二级菜单
+        /// </summary>
+        /// <param name="newMenuID"></param>
+        public void insertNewSecondMenu(int newMenuID, MenuSecond ms , int parentID)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            try
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = @"INSERT INTO `sh_data`.`menu` (`menu_id`, `menu_parent_id`, `menu_cn_name`, `menu_power`, `menu_url`) VALUES 
+                                    (?newMenuID, ?parentID, ?menuCnName, ?menuPower, ?menuUrl);";
+                cmd.Parameters.Add("?newMenuID", MySqlDbType.Int32).Value = newMenuID;
+                cmd.Parameters.Add("?menuCnName", MySqlDbType.VarChar).Value = ms.secondMenuName;
+                cmd.Parameters.Add("?menuPower", MySqlDbType.VarChar).Value = ms.secondMenuPower;
+                cmd.Parameters.Add("?menuUrl", MySqlDbType.VarChar).Value = ms.secondMenuNameUrl;
+                cmd.Parameters.Add("?parentID", MySqlDbType.Int32).Value = parentID;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        /// <summary>
         /// 更新一级菜单
         /// </summary>
         /// <param name="newMenuID"></param>
@@ -150,6 +183,102 @@ namespace DAL
                 cmd.Parameters.Add("?menuCnName", MySqlDbType.VarChar).Value = mf.firstMenuName;
                 cmd.Parameters.Add("?menuPower", MySqlDbType.VarChar).Value = mf.firstMenuPower;
                 cmd.Parameters.Add("?menuUrl", MySqlDbType.VarChar).Value = mf.firstMenuNameUrl;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        /// <summary>
+        /// 更新二级菜单
+        /// </summary>
+        /// <param name="newMenuID"></param>
+        public void UpdateSecondMenu(MenuSecond ms,int parentID)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            try
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_cn_name`=?menuCnName, `menu_power`=?menuPower, `menu_url`=?menuUrl WHERE `menu_cn_name`=?menuCnName and menu_parent_id =?parentID;";
+                cmd.Parameters.Add("?menuCnName", MySqlDbType.VarChar).Value = ms.secondMenuName;
+                cmd.Parameters.Add("?menuPower", MySqlDbType.VarChar).Value = ms.secondMenuPower;
+                cmd.Parameters.Add("?menuUrl", MySqlDbType.VarChar).Value = ms.secondMenuNameUrl;
+                cmd.Parameters.Add("?parentID", MySqlDbType.Int32).Value = parentID;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        /// <summary>
+        /// 菜单排序
+        /// </summary>
+        /// <param name="menuName"></param>
+        /// <param name="parentID"></param>
+        public void UpdateMenuOrder(string[] menuNameArray, int parentID)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            try
+            {
+                string sql = string.Empty;
+                for (int i = 0, len = menuNameArray.Length; i < len; i++)
+                {
+                    sql += "UPDATE `sh_data`.`menu` SET `menu_order`=" + i + " WHERE `menu_cn_name`='" + menuNameArray[i] + "' and menu_parent_id =?parentID;";
+                }
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = sql;
+                //cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_order`='0' WHERE `menu_cn_name`=?menuName and menu_parent_id =?parentID;";
+                //cmd.Parameters.Add("?menuName", MySqlDbType.VarChar).Value = menuName;
+                cmd.Parameters.Add("?parentID", MySqlDbType.Int32).Value = parentID;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+        /// <summary>
+        /// 删除菜单
+        /// </summary>
+        /// <param name="menuName"></param>
+        /// <param name="menuID"></param>
+        /// <param name="parentID"></param>
+        public void DeleteMenu(int menuID)
+        {
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            connection.Open();
+            try
+            {
+                MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `enabled`='0' WHERE `menu_parent_id`=?menuID;UPDATE `sh_data`.`menu` SET `enabled`='0' WHERE `menu_id`=?menuID;";
+                //cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_order`='0' WHERE `menu_cn_name`=?menuName and menu_parent_id =?parentID;";
+                //cmd.Parameters.Add("?menuName", MySqlDbType.VarChar).Value = menuName;
+                cmd.Parameters.Add("?menuID", MySqlDbType.Int32).Value = menuID;
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)

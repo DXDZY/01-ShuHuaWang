@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 bs-callout-info">
                 <%--<div class="bs-example" data-example-id="simple-horizontal-form">--%>
                 <div class="alert alert-info" role="alert">操作一级菜单（增删改）</div>
                     <form id="defaultFormF" method="post" class="form-horizontal">
@@ -57,6 +57,9 @@
                             <div class="col-lg-5">
                                 <div id="first-Menu-Drop-down" class="first-Menu-Drop-down">
                                 </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-danger" id="deleteFMenu">删除一级菜单</button>
                             </div>
                         </div>
 
@@ -98,7 +101,7 @@
                 </div>
                  <%--</div>--%>
             </div>
-            <div class="col-sm-6 bs-callout-info">
+            <div class="col-sm-6 ">
                 <div class="alert alert-info" role="alert">操作二级菜单（增删改）</div>
                 <form id="defaultFormS" method="post" class="form-horizontal">
                     <div class="form-group">
@@ -114,6 +117,9 @@
                             <div id="second-level-Drop-down">
                                 <input type="text" class="form-control" name="secondMenuName" id="secondMenuName" />
                             </div>                          
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-danger" id="deleteSMenu">删除二级菜单</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -145,75 +151,89 @@
                         </div>
                     </div>
                 </form>
-                <div class="alert alert-success messageShow" role="alert" id="Div1">
+                <div class="alert alert-success messageShow" role="alert" id="secondMenuSuccess">
                     <strong>操作成功！</strong>
                 </div>
-                <div class="alert alert-warning messageShow" role="alert" id="Div2">
+                <div class="alert alert-warning messageShow" role="alert" id="secondMenuFail">
                     <strong>操作失败！</strong>
                 </div>
             </div>
-            <%--<div class="col-sm-4">
-                <div class="bs-example bs-example-3" data-example-id="simple-horizontal-form">
-                    <ul id="sortable">
-                        <li class="ui-state-default">Item 1</li>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 bs-callout-info-order" id="fMenuOrder">
+                <div class="alert alert-info" role="alert">操作一级菜单（拖动排序）</div>
+                <div class="col-lg-6 col-lg-offset-2 menuOrder">
+                     <ul id="sortableF" class="sortable">
+<%--                        <li class="ui-state-default">Item 1</li>
                         <li class="ui-state-default">Item 2</li>
                         <li class="ui-state-default">Item 3</li>
                         <li class="ui-state-default">Item 4</li>
-                        <li class="ui-state-default">Item 5</li>
+                        <li class="ui-state-default">Item 5</li>--%>
                     </ul>
-                    <button type="button" class="btn btn-primary">保存</button>
+                    <div class="alert alert-success messageShow" role="alert" id="saveOrderFSuccess">
+                        <strong>操作成功！</strong>
+                    </div>
+                    <div class="alert alert-warning messageShow" role="alert" id="saveOrderFFail">
+                        <strong>操作失败！</strong>
+                    </div>
                 </div>
-            </div>--%>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                 <div class="bs-example bs-example-1" data-example-id="simple-horizontal-form">
-                 </div>
+                <div class="col-lg-4">
+                    <button type="button" class="btn btn-primary" id="saveOrderF">保存</button>
+                </div>
+
+            </div>
+            <div class="col-sm-6" style="display:none;" id="sMenuOrder">
+                <div class="alert alert-info" role="alert">操作二级菜单（拖动排序）</div>
+                <div class="col-lg-6 col-lg-offset-2 menuOrder">
+                     <ul id="sortableS" class="sortable">
+<%--                        <li class="ui-state-default">Item 1</li>
+                        <li class="ui-state-default">Item 2</li>
+                        <li class="ui-state-default">Item 3</li>
+                        <li class="ui-state-default">Item 4</li>
+                        <li class="ui-state-default">Item 5</li>--%>
+                    </ul>
+                    <div class="alert alert-success messageShow" role="alert" id="saveOrderSSuccess">
+                        <strong>操作成功！</strong>
+                    </div>
+                    <div class="alert alert-warning messageShow" role="alert" id="saveOrderSFail">
+                        <strong>操作失败！</strong>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <button type="button" class="btn btn-primary" id="saveOrderS">保存</button>
+                </div>
+
             </div>
         </div>
-        <div class="row">
-            <%--<div class="col-sm-12">
-                <div class="bs-example bs-example-2" data-example-id="simple-horizontal-form">
-                    <form id="defaultForm1" method="post" class="form-horizontal" action="handler/GetDataHandler.ashx">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">一级菜单</label>
-                            <div class="col-lg-5">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="firstMenuName" disabled  value="新闻"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="删除当前一级菜单" ><span class="glyphicon glyphicon-remove"></span></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">二级级菜单</label>
-                            <div class="col-lg-5">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="secondMenuName"  disabled  value="展讯"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" data-toggle="tooltip" data-placement="right" title="删除当前二级菜单" ><span class="glyphicon glyphicon-remove"></span></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">链接地址</label>
-                            <div class="col-lg-5">
-                                <input type="text" class="form-control" name="menuURL"  value="index-zx.aspx"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-lg-9 col-lg-offset-3">
-                                <button type="submit" class="btn btn-primary" name="signup" value="Sign up">创建</button>
-                                <button type="button" class="btn btn-info" id="resetBtn1">重置</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>--%>
+        <div class="row" style="padding-bottom:20px;">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="refresh">刷新页面</button>
         </div>
+        <%--弹出框--%>
+        <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" id="warningModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">警告信息</h4>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger" id="deleteMenuTrue">确定删除</button>
+              </div>
+                <div class="alert alert-success messageShow" role="alert" id="deleteMenuSuccess">
+                    <strong>操作成功！</strong>
+                </div>
+                <div class="alert alert-warning messageShow" role="alert" id="deleteMenuFail">
+                    <strong>操作失败！</strong>
+                </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->          
     </div>
     <script type="text/javascript">
         /**
@@ -253,27 +273,7 @@
                         }
                     }
                 }
-            }).on('success.form.bv', function (event) {
-                event.preventDefault();
-                var url = 'handler/GetDataHandler.ashx';
-                var $this = $(this);
-                var form = $this.serialize();
-                var requestData = {
-                    cmd: 'firstMenuSave',
-                    form:form
-                };
-                $.post(url, requestData, function (result) {
-                    if (result == '1') {
-                        $('#firstMenuSuccess').show('slow');
-                        setTimeout('hideMessageSuccess()', 3000);
-                    } else {
-                        $('#firstMenuFail').show('slow');
-                        setTimeout('hideMessageFail()', 3000);
-                    }
-                    $this.find('[type=submit]').removeAttr('disabled');
-                    // ... process the result ...
-                });
-            });
+            }).on('success.form.bv', firstSubmitFun);
             //二级菜单校验
             $('#defaultFormS').bootstrapValidator({
                 //        live: 'disabled',
@@ -314,27 +314,7 @@
                         }
                     }
                 }
-            }).on('success.form.bv', function (event) {
-                event.preventDefault();
-                var url = 'handler/GetDataHandler.ashx';
-                var $this = $(this);
-                var form = $this.serialize();
-                var requestData = {
-                    cmd: 'firstMenuSave',
-                    form: form
-                };
-                $.post(url, requestData, function (result) {
-                    if (result == '1') {
-                        $('#secondMenuSuccess').show('slow');
-                        setTimeout('hideMessageSuccess()', 3000);
-                    } else {
-                        $('#secondMenuFail').show('slow');
-                        setTimeout('hideMessageFail()', 3000);
-                    }
-                    $this.find('[type=submit]').removeAttr('disabled');
-                    // ... process the result ...
-                });
-            });
+            }).on('success.form.bv', secondSubmitFun);
 
 
             //$('#validateBtn1').click(function () {
@@ -350,10 +330,10 @@
             $('#defaultFormSresetBtn').click(function () {
                 $('#defaultFormS').data('bootstrapValidator').resetForm(true);
             });
-            $("#sortable").sortable({
+            $(".sortable").sortable({
                 revert: true
             });
-            $("ul, li").disableSelection();
+            //$("ul, li").disableSelection();
             //$('#validateBtn1').click(function () {
             //    $('#defaultForm1').bootstrapValidator('validate');
             //});

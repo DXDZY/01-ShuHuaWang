@@ -16,42 +16,70 @@ namespace shuhuawang.handler
 
         public void ProcessRequest(HttpContext context)
         {
-            GetData gd = new GetData();
-            string cmd = context.Request["cmd"].ToString();
-            //创建菜单
-            if (cmd == "getMenu")
+            try
             {
-                string userPower = context.Request["userPower"].ToString();
-                string power = string.Empty;
-                switch(userPower)
+                GetData gd = new GetData();
+                string cmd = context.Request["cmd"].ToString();
+                //创建菜单
+                if (cmd == "getMenu")
                 {
-                    case "0":
-                        power = "游客";
-                        break;
-                    case "1":
-                        power = "管理员";
-                        break;
-                    default:
-                        power = "游客";
-                        break;
+                    string userPower = context.Request["userPower"].ToString();
+                    string power = string.Empty;
+                    switch (userPower)
+                    {
+                        case "0":
+                            power = "游客";
+                            break;
+                        case "1":
+                            power = "管理员";
+                            break;
+                        default:
+                            power = "游客";
+                            break;
+                    }
+                    string menu = gd.getMenuJSON(power);
+                    context.Response.Write(menu);
                 }
-                string menu = gd.getMenuJSON(power);
-                context.Response.Write(menu);
+                //检查菜单是否已经存在
+                else if (cmd == "checkMenuName")
+                {
+                    context.Response.Write("false");
+                }
+                //存储一级菜单
+                else if (cmd == "firstMenuSave")
+                {
+                    string form = HttpUtility.UrlDecode(context.Request["form"].ToString());
+                    gd.insertNewFirstMenu(form);
+                    context.Response.Write("1");
+                }
+                else if (cmd == "secondMenuSave")
+                {
+                    string form = HttpUtility.UrlDecode(context.Request["form"].ToString());
+                    gd.insertNewSecondMenu(form);
+                    context.Response.Write("1");
+                }
+                else if (cmd == "menuOrder")
+                {
+                    string menuList = HttpUtility.UrlDecode(context.Request["menuNameList"].ToString());
+                    int parentID = Convert.ToInt32(context.Request["parentID"]);
+                    gd.UpdateMenuOrder(menuList, parentID);
+                    context.Response.Write("1");
+                }
+                else if (cmd == "menuDelete")
+                {
+                    //string menuName = HttpUtility.UrlDecode(context.Request["menuName"].ToString());
+                    //int parentID = Convert.ToInt32(context.Request["parentID"]);
+                    int menuID = Convert.ToInt32(context.Request["menuID"]);
+                    gd.DeleteMenu(menuID);
+                    context.Response.Write("1");
+                }
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("");
             }
-            //检查菜单是否已经存在
-            else if (cmd == "checkMenuName")
+            catch (Exception ex)
             {
-                context.Response.Write("false");
+                context.Response.Write("0");
             }
-            //存储一级菜单
-            else if (cmd == "firstMenuSave")
-            {
-                string form = HttpUtility.UrlDecode(context.Request["form"].ToString());
-                gd.insertNewFirstMenu(form);
-                context.Response.Write("1");
-            }
-            context.Response.ContentType = "text/plain";
-            context.Response.Write("");
         }
 
         public bool IsReusable

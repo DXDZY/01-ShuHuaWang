@@ -61,6 +61,7 @@
                 if (data.length > 0) {
                     var dataJson = $.parseJSON(data);
                     var html = '';
+                    var htmlOrder = '';
                     $.each(dataJson, function (index, item) {
                         if (index == 0) {
                             return true;
@@ -70,17 +71,27 @@
                             html += item.menu_cn_name;
                             html += '<span class="caret"></span></button><ul class="dropdown-menu">';
                         }                        
-                        html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '">' + item.menu_cn_name + '</a></li>';
+                        html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '" data-parentID="' + item.menu_parent_id + '" data-menuID="' + item.menu_id + '">' + item.menu_cn_name + '</a></li>';
+                        //初始化一级菜单排序控件
+                        htmlOrder += '<li class="ui-state-default" data-parentID="' + item.menu_parent_id + '">' + item.menu_cn_name + '</li>';
                     });
-                    var firstHtml = html + '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
-                    var secondHtml = html + '</ul></div><input type="text"class="form-control"name="secondMenuLevelName" disabled/></div>';
+                    if (htmlOrder != '') {
+                        $('#fMenuOrder').show('slow');
+                    }
+                    var firstHtml = html + '</ul></div><input type="text"class="form-control"name="firstMenuName" id="firstMenuName"/></div>';
+                    var secondHtml = html + '</ul></div><input type="text"class="form-control"name="secondMenuLevelName" readonly/></div>';
                     $('#first-Menu-Drop-down').html(firstHtml);
                     $('#second-Menu-Drop-down').html(secondHtml);
-                    //html += '</ul></div><input type="text"class="form-control"name="firstMenuName"/></div>';
+                    //初始化一级菜单排序控件
+                    $('#sortableF').html(htmlOrder);
                 }
 
             });            
         }
+        //刷新页面
+        $('#refresh').click(function () {
+            window.location.reload();
+        });
     });
 })(jQuery);
 
@@ -175,7 +186,7 @@
             html += '<span class="caret"></span>'
             $this.closest('ul').prev().html(html);
             var $currentInput = $this.closest('.input-group-btn').next();
-            $currentInput.val($text).focus();
+            $currentInput.val($text).focus().attr('data-menuID', $this.attr('data-menuID'));
             //操作一级菜单
             if ($currentInput.attr('name') == 'firstMenuName') {
                 //验证菜单名称
@@ -233,21 +244,30 @@
                     if (data.length > 0) {
                         var dataJson = $.parseJSON(data);
                         var html = '';
+                        var htmlOrder = '';
                         $.each(dataJson, function (index, item) {
                             if (item.menu_cn_name == $text) {
-                                if (item.child.length > 0) {
+                                if (item.child.length > 0) {                                   
                                     $.each(item.child, function (indexChild, itemChild) {
                                         if (indexChild == 0) {
                                             html += '<div class="input-group"><div class="input-group-btn"><button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                                             html += itemChild.menu_cn_name;
                                             html += '<span class="caret"></span></button><ul class="dropdown-menu">';
                                         }
-                                        html += '<li><a style="cursor:pointer;" data-menuPower="' + itemChild.menu_power + '" data-menuUrl="' + itemChild.menu_url + '">' + itemChild.menu_cn_name + '</a></li>';
+                                        html += '<li><a style="cursor:pointer;" data-menuPower="' + itemChild.menu_power + '" data-menuUrl="' + itemChild.menu_url + '" data-parentID="' + itemChild.menu_parent_id + '" data-menuID="' + itemChild.menu_id + '">' + itemChild.menu_cn_name + '</a></li>';
+                                        //初始化二级菜单排序控件
+                                        htmlOrder += '<li class="ui-state-default" data-parentID="' + itemChild.menu_parent_id + '">' + itemChild.menu_cn_name + '</li>';
                                     });
-                                    html += '</ul></div><input type="text" class="form-control" name="secondMenuName"/></div>';                                   
+                                    html += '</ul></div><input type="text" class="form-control" name="secondMenuName" id="secondMenuName"/></div>';
+                                    //初始化二级菜单排序控件
+                                    $('#sortableS').html(htmlOrder);
+                                    if (htmlOrder != '') {
+                                        $('#sMenuOrder').show('slow');
+                                    } 
                                 }
                                 else {
                                     html = '<input type="text" class="form-control" name="secondMenuName" id="secondMenuName" />';
+                                    $('#sMenuOrder').hide('slow');
                                 }
                                 $('#second-level-Drop-down').html(html);
                                 $('#defaultFormS').bootstrapValidator({
@@ -289,33 +309,142 @@
                                             }
                                         }
                                     }
-                                }).on('success.form.bv', function (event) {
-                                    event.preventDefault();
-                                    var url = 'handler/GetDataHandler.ashx';
-                                    var $this = $(this);
-                                    var form = $this.serialize();
-                                    var requestData = {
-                                        cmd: 'firstMenuSave',
-                                        form: form
-                                    };
-                                    $.post(url, requestData, function (result) {
-                                        if (result == '1') {
-                                            $('#secondMenuSuccess').show('slow');
-                                            setTimeout('hideMessageSuccess()', 3000);
-                                        } else {
-                                            $('#secondMenuFail').show('slow');
-                                            setTimeout('hideMessageFail()', 3000);
-                                        }
-                                        $this.find('[type=submit]').removeAttr('disabled');
-                                        // ... process the result ...
-                                    });
-                                });
+                                }).on('success.form.bv', secondSubmitFun);
                             }                            
                         });                        
                     }                    
                 });
             }
         });
-        
+        //一级菜单排序提交
+        $('#saveOrderF,#saveOrderS').click(function (event) {
+            var menuNameList = '';
+            var parentID = '';
+            var targetID = event.target.id;
+            //$('#' + targetID + ' li').each(function (index, item) {
+            //$('#' + targetID).closest('.row').find('.sortable li').each(function (index, item) {
+            //    menuNameList += $(item).text() + '&';
+            //    parentID = $(item).attr('data-parentID');
+            //});
+            if (targetID == 'saveOrderF') {
+                $('#sortableF li').each(function (index, item) {
+                    menuNameList += $(item).text() + '&';
+                    parentID = $(item).attr('data-parentID');
+                });
+            } else if (targetID == 'saveOrderS') {
+                $('#sortableS li').each(function (index, item) {
+                    menuNameList += $(item).text() + '&';
+                    parentID = $(item).attr('data-parentID');
+                });
+            }
+            menuNameList = menuNameList.substr(0, menuNameList.length - 1);
+            var requestData = {
+                cmd: 'menuOrder',
+                menuNameList: encodeURI(menuNameList),
+                parentID: parentID
+            };
+            var url = 'handler/GetDataHandler.ashx';
+            $.post(url, requestData, function (data) {
+                if (data == '1') {
+                    $('#' + targetID + 'Success').show('slow');
+                    setTimeout('hideMessageSuccess()', 3000);
+                } else {
+                    $('#' + targetID + 'Fail').show('slow');
+                    setTimeout('hideMessageFail()', 3000);
+                }
+            });
+        });
+        //删除一级菜单
+        $('#deleteFMenu,#deleteSMenu').click(function (event) {
+            var id = event.target.id;
+            var menuName = ''
+            var text = '';
+            var parentID = '';
+            var menuID = ''
+            if (id == 'deleteFMenu') {
+                menuName = $('#firstMenuName').val();
+                //parentID = $('#firstMenuName').attr('data-parentID');
+                menuID = $('#firstMenuName').attr('data-menuID');
+                text = '您确定要删除一级菜单【' + menuName + '】吗，删除该菜单后，子菜单也会一并删除。'
+            } else if (id == 'deleteSMenu') {
+                menuName = $('#secondMenuName').val();
+                //parentID = $('#secondMenuName').attr('data-parentID');
+                menuID = $('#secondMenuName').attr('data-menuID');
+                text = '您确定要删除二级菜单【' + menuName + '】吗。'
+            }
+            if (menuID != null && menuID != '') {
+                $('#warningModal').find('.container-fluid').text(text);
+                $('#deleteMenuTrue').attr({
+                    //menuName: menuName,
+                    //parentID: parentID,
+                    menuID: menuID
+                });
+                $('#warningModal').modal('show');
+            }
+        });
+        //确定删除菜单
+        $('#deleteMenuTrue').click(function (event) {
+            var $this = $(this);
+            var requestData = {
+                cmd: 'menuDelete',
+                //menuName: encodeURI($this.attr('menuName')),
+                //parentID: $this.attr('parentID'),
+                menuID: $this.attr('menuID')
+            };
+            var url = 'handler/GetDataHandler.ashx';
+            $.post(url, requestData, function (data) {
+                if (data == '1') {
+                    $('#deleteMenuSuccess').show('slow');
+                    setTimeout('hideMessageSuccess();', 3000);
+                } else {
+                    $('#deleteMenuFail').show('slow');
+                    setTimeout('hideMessageFail()', 3000);
+                }
+            });
+        });
     });
 })(jQuery);
+//一级菜单提交时触发方法
+var firstSubmitFun = function (event) {
+    event.preventDefault();
+    var url = 'handler/GetDataHandler.ashx';
+    var $this = $(this);
+    var form = $this.serialize();
+    var requestData = {
+        cmd: 'firstMenuSave',
+        form: form
+    };
+    $.post(url, requestData, function (result) {
+        if (result == '1') {
+            $('#firstMenuSuccess').show('slow');
+            setTimeout('hideMessageSuccess()', 3000);
+        } else {
+            $('#firstMenuFail').show('slow');
+            setTimeout('hideMessageFail()', 3000);
+        }
+        $this.find('[type=submit]').removeAttr('disabled');
+        // ... process the result ...
+    });
+};
+//二级菜单提交时触发方法
+var secondSubmitFun = function (event) {
+    event.preventDefault();
+    var url = 'handler/GetDataHandler.ashx';
+    var $this = $(this);
+    var form = $this.serialize();
+    var requestData = {
+        cmd: 'secondMenuSave',
+        form: form
+    };
+    $.post(url, requestData, function (result) {
+        if (result == '1') {
+            $('#secondMenuSuccess').show('slow');
+            setTimeout('hideMessageSuccess()', 3000);
+        } else {
+            $('#secondMenuFail').show('slow');
+            setTimeout('hideMessageFail()', 3000);
+        }
+        $this.find('[type=submit]').removeAttr('disabled');
+        // ... process the result ...
+    });
+};
