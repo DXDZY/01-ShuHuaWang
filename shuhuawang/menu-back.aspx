@@ -85,7 +85,13 @@
                                 <input type="text" class="form-control" name="firstMenuNameUrl" id="firstMenuNameUrl" value="index-zx.aspx" />
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <div class="checkbox col-lg-offset-3">
+                                <label style="padding-left:35px;">
+                                  <input type="checkbox" name="freezeMenu" id="freezeFirstMenu" /> 是否冻结
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
                                 <button type="submit" class="btn btn-primary" name="signup" value="Sign up" id="defaultFormFSubmit">提交</button>
@@ -143,7 +149,13 @@
                             <input type="text" class="form-control" name="secondMenuNameUrl" id="secondMenuNameUrl" value="index-zx.aspx" />
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <div class="checkbox col-lg-offset-3">
+                            <label style="padding-left:35px;">
+                                <input type="checkbox" name="freezeMenu" id="freezeSecondMenu" /> 是否冻结
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-3">
                             <button type="submit" class="btn btn-primary" name="signup" value="Sign up" id="Button1">提交</button>
@@ -205,9 +217,9 @@
 
             </div>
         </div>
-        <div class="row" style="padding-bottom:20px;">
+<%--        <div class="row" style="padding-bottom:20px;">
             <button type="button" class="btn btn-primary btn-lg btn-block" id="refresh">刷新页面</button>
-        </div>
+        </div>--%>
         <%--弹出框--%>
         <div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel" id="warningModal">
           <div class="modal-dialog" role="document">
@@ -269,6 +281,10 @@
                         }
                     },
                     firstMenuNameUrl: {
+                        validators: {
+                        }
+                    },
+                    frezzMenu:{
                         validators: {
                         }
                     }

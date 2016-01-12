@@ -33,6 +33,7 @@ namespace BLL
                     menu += "\"menu_cn_name\":\"" + dr["menu_cn_name"] + "\",";
                     menu += "\"menu_url\":\"" + dr["menu_url"] + "\",";
                     menu += "\"menu_power\":\"" + dr["menu_power"] + "\",";
+                    menu += "\"freeze\":\"" + dr["freeze"] + "\",";
                     DataRow[] drs = dt.Select("menu_parent_id =" + dr["menu_id"]);
                     if (drs.Length > 0)
                     {
@@ -45,6 +46,7 @@ namespace BLL
                             menu += "\"menu_cn_name\":\"" + drChild["menu_cn_name"] + "\",";
                             menu += "\"menu_url\":\"" + drChild["menu_url"] + "\",";
                             menu += "\"menu_power\":\"" + drChild["menu_power"] + "\",";
+                            menu += "\"freeze\":\"" + drChild["freeze"] + "\",";
                             menu += "\"child\":\"\"";
                             menu += "},";
                         }

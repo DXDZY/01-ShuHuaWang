@@ -390,3 +390,9 @@ body {
 bottom:0;  
 overflow:hidden;*/
 }
+/*.ui-state-default a:hover {
+    color:#D9EDF7 !important;
+}
+.ui-state-default {
+    color:black;
+}*/

@@ -71,7 +71,7 @@
                             html += item.menu_cn_name;
                             html += '<span class="caret"></span></button><ul class="dropdown-menu">';
                         }                        
-                        html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '" data-parentID="' + item.menu_parent_id + '" data-menuID="' + item.menu_id + '">' + item.menu_cn_name + '</a></li>';
+                        html += '<li><a style="cursor:pointer;" data-menuPower="' + item.menu_power + '" data-menuUrl="' + item.menu_url + '" data-parentID="' + item.menu_parent_id + '" data-menuID="' + item.menu_id + '" freeze="' + item.freeze + '">' + item.menu_cn_name + '</a></li>';
                         //初始化一级菜单排序控件
                         htmlOrder += '<li class="ui-state-default" data-parentID="' + item.menu_parent_id + '">' + item.menu_cn_name + '</li>';
                     });
@@ -84,6 +84,8 @@
                     $('#second-Menu-Drop-down').html(secondHtml);
                     //初始化一级菜单排序控件
                     $('#sortableF').html(htmlOrder);
+                    $('#sortableF').hide();
+                    $('#sortableF').show('slow');
                 }
 
             });            
@@ -198,6 +200,12 @@
                 $('#firstMenuPower').val($this.attr('data-menuPower'));
                 //url赋值
                 $('#firstMenuNameUrl').val($this.attr('data-menuUrl'));
+                //是否冻结赋值
+                if ($this.attr('freeze') == '1') {
+                    $('#freezeFirstMenu').prop('checked', 'true');
+                } else {
+                    $('#freezeFirstMenu').removeAttr('checked');
+                }
                 //验证权限
                 $('#defaultFormF')
                     .data('bootstrapValidator')
@@ -220,6 +228,12 @@
                 $('#secondMenuPower').val($this.attr('data-menuPower'));
                 //url赋值
                 $('#secondMenuNameUrl').val($this.attr('data-menuUrl'));
+                //是否冻结赋值
+                if ($this.attr('freeze') == '1') {
+                    $('#freezeSecondMenu').prop('checked', 'true');
+                } else {
+                    $('#freezeSecondMenu').removeAttr('checked');
+                }
                 //验证权限
                 $('#defaultFormS')
                     .data('bootstrapValidator')
@@ -254,7 +268,7 @@
                                             html += itemChild.menu_cn_name;
                                             html += '<span class="caret"></span></button><ul class="dropdown-menu">';
                                         }
-                                        html += '<li><a style="cursor:pointer;" data-menuPower="' + itemChild.menu_power + '" data-menuUrl="' + itemChild.menu_url + '" data-parentID="' + itemChild.menu_parent_id + '" data-menuID="' + itemChild.menu_id + '">' + itemChild.menu_cn_name + '</a></li>';
+                                        html += '<li><a style="cursor:pointer;" data-menuPower="' + itemChild.menu_power + '" data-menuUrl="' + itemChild.menu_url + '" data-parentID="' + itemChild.menu_parent_id + '" data-menuID="' + itemChild.menu_id + '" freeze="' + itemChild.freeze + '">' + itemChild.menu_cn_name + '</a></li>';
                                         //初始化二级菜单排序控件
                                         htmlOrder += '<li class="ui-state-default" data-parentID="' + itemChild.menu_parent_id + '">' + itemChild.menu_cn_name + '</li>';
                                     });
@@ -262,6 +276,7 @@
                                     //初始化二级菜单排序控件
                                     $('#sortableS').html(htmlOrder);
                                     if (htmlOrder != '') {
+                                        $('#sMenuOrder').hide('slow');
                                         $('#sMenuOrder').show('slow');
                                     } 
                                 }

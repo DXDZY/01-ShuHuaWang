@@ -179,10 +179,11 @@ namespace DAL
             try
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_cn_name`=?menuCnName, `menu_power`=?menuPower, `menu_url`=?menuUrl WHERE `menu_cn_name`=?menuCnName;";
+                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_cn_name`=?menuCnName, `menu_power`=?menuPower, `menu_url`=?menuUrl, `freeze`=?freeze  WHERE `menu_cn_name`=?menuCnName;";
                 cmd.Parameters.Add("?menuCnName", MySqlDbType.VarChar).Value = mf.firstMenuName;
                 cmd.Parameters.Add("?menuPower", MySqlDbType.VarChar).Value = mf.firstMenuPower;
                 cmd.Parameters.Add("?menuUrl", MySqlDbType.VarChar).Value = mf.firstMenuNameUrl;
+                cmd.Parameters.Add("?freeze", MySqlDbType.Int16).Value = mf.freezeMenu;
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -208,11 +209,12 @@ namespace DAL
             try
             {
                 MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_cn_name`=?menuCnName, `menu_power`=?menuPower, `menu_url`=?menuUrl WHERE `menu_cn_name`=?menuCnName and menu_parent_id =?parentID;";
+                cmd.CommandText = @"UPDATE `sh_data`.`menu` SET `menu_cn_name`=?menuCnName, `menu_power`=?menuPower, `menu_url`=?menuUrl, `freeze`=?freeze WHERE `menu_cn_name`=?menuCnName and menu_parent_id =?parentID;";
                 cmd.Parameters.Add("?menuCnName", MySqlDbType.VarChar).Value = ms.secondMenuName;
                 cmd.Parameters.Add("?menuPower", MySqlDbType.VarChar).Value = ms.secondMenuPower;
                 cmd.Parameters.Add("?menuUrl", MySqlDbType.VarChar).Value = ms.secondMenuNameUrl;
                 cmd.Parameters.Add("?parentID", MySqlDbType.Int32).Value = parentID;
+                cmd.Parameters.Add("?freeze", MySqlDbType.Int16).Value = ms.freezeMenu;
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)

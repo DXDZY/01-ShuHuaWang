@@ -74,7 +74,14 @@ namespace BLL
                 //给属性赋值
                 if (collection.Keys.Contains(item.Name))
                 {
-                    item.SetValue(entity, Convert.ChangeType(collection[item.Name], item.PropertyType), null);
+                    if (item.Name == "freezeMenu" && collection.Keys.Contains("freezeMenu"))
+                    {
+                        item.SetValue(entity, Convert.ChangeType(1, item.PropertyType), null);
+                    }
+                    else
+                    {
+                        item.SetValue(entity, Convert.ChangeType(collection[item.Name], item.PropertyType), null);
+                    }
                 }
             }
             return entity;
